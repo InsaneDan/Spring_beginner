@@ -10,10 +10,7 @@ import java.util.Map;
 @Scope("prototype")
 public class Cart {
 
-    private Map<Product, Integer> cartMap = new HashMap<>();
-
-    public Cart() {
-    }
+    private final Map<Product, Integer> cartMap = new HashMap<>();
 
     public Map<Product, Integer> getCartMap() {
         return cartMap;

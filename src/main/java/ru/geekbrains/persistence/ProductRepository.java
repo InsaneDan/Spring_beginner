@@ -13,9 +13,6 @@ public class ProductRepository {
 
     private final Map<Long, Product> productMap = new ConcurrentHashMap<>();
 
-    public ProductRepository() {
-    }
-
     @PostConstruct
     public void createProducts(){
 //        for (int i = 1; i < 6; i++) {

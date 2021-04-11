@@ -1,7 +1,6 @@
 package ru.geekbrains.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.geekbrains.persistence.Cart;
 import ru.geekbrains.persistence.Product;
@@ -10,7 +9,7 @@ import ru.geekbrains.persistence.ProductRepository;
 import java.util.Map;
 
 @Component
-@Scope("prototype")
+//@Scope("prototype")
 public class CartServiceImpl implements CartService {
 
     private Cart cart;
@@ -52,6 +51,7 @@ public class CartServiceImpl implements CartService {
 
     public void printCart() {
         double sum = 0.0;
+        // NOTE: т.к. это мапа, сортировки нет
         for (Map.Entry<Product, Integer> entryMap : cart.getCartMap().entrySet()) {
             Product product = entryMap.getKey();
             System.out.printf("Product id = %-2s | name = %-15s | price = %-8s | quantity = %-3s | sum = %-12s \n",
@@ -61,4 +61,17 @@ public class CartServiceImpl implements CartService {
         System.out.println("Общая стоимость продуктов в корзине: " + sum);
     }
 
+    @Override
+    public int getProductQuantity(Product product) {
+        if (cart.getCartMap().containsKey(product)) {
+            return cart.getCartMap().get(product);
+        }
+        return 0;
+    }
+
+    @Override
+    public int getProductQuantity(Long prodId) {
+        Product product = productRepository.findById(prodId);
+        return this.getProductQuantity(product);
+    }
 }
