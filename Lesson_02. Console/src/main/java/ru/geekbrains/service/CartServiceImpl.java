@@ -1,50 +1,53 @@
 package ru.geekbrains.service;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.persistence.Cart;
 import ru.geekbrains.persistence.Product;
 import ru.geekbrains.persistence.ProductRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class CartServiceImpl implements CartService {
 
-    private Cart cart;
     private final ProductRepository productRepository;
 
-    public CartServiceImpl(ProductRepository productRepository, Cart cart) {
+    public CartServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.cart = cart;
     }
 
-    public void setNewCart() {
-        this.cart = new Cart();
+    @Lookup
+    @Override
+    public Cart getNewCart() {
+        return null;
     }
 
     @Override
-    public void addProduct(Product product, Integer quantity) {
+    public void addProduct(Cart cart, Product product, Integer quantity) {
         cart.addProduct(product, quantity);
     }
 
     @Override
-    public void addProduct(Long prodId, Integer quantity) {
+    public void addProduct(Cart cart, Long prodId, Integer quantity) {
         Product product = productRepository.findById(prodId);
-        this.addProduct(product, quantity);
+        this.addProduct(cart, product, quantity);
     }
 
     @Override
-    public void delProduct(Product product, Integer quantity) {
+    public void delProduct(Cart cart, Product product, Integer quantity) {
             cart.delProduct(product, quantity);
     }
 
     @Override
-    public BigDecimal getSum() {
+    public BigDecimal getSum(Cart cart) {
         return cart.getSum();
     }
 
-    public void printCart() {
+    public void printCart(Cart cart) {
         BigDecimal sum = BigDecimal.valueOf(0);
         // NOTE: т.к. это мапа, сортировки нет
         for (Map.Entry<Product, Integer> entryMap : cart.getCartMap().entrySet()) {
@@ -58,7 +61,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int getProductQuantity(Product product) {
+    public int getProductQuantity(Cart cart, Product product) {
         if (cart.getCartMap().containsKey(product)) {
             return cart.getCartMap().get(product);
         }
@@ -66,8 +69,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int getProductQuantity(Long prodId) {
+    public int getProductQuantity(Cart cart, Long prodId) {
         Product product = productRepository.findById(prodId);
-        return this.getProductQuantity(product);
+        return this.getProductQuantity(cart, product);
     }
 }

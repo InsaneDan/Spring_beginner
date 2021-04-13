@@ -9,9 +9,12 @@
 3. Создайте класс Product с полями (id, title, cost).
 4. Реализуйте сервлет выводящий на страницу список из 10 продуктов (создаете продукты в момент обработки запроса).
 
-Сервер приложений: WildFly-23.0.0.Final
+Сервер приложений: WildFly-23.0.0.Final (старт сервера через stanalone.bat)
 Реализация: HttpServlet + JSP (± подобие JPA, т.к. нет подключения к БД)
-Для запуска: Run Maven goal: clean install wildfly:deploy
+Для установки на сервер приложений - Run Maven goal: clean install wildfly:deploy
+
+URL: http://127.0.0.1:8080/webapp/http-servlet - основные методы HttpServlet
+URL: http://127.0.0.1:8080/webapp/product - список продуктов
 
 Комментарии:
 - Дескриптор развертывания. Файл web.xml содержит только служебную информацию, маппинг не прописан (используются аннотации @WebServlet(urlPatterns = "..."))
@@ -48,6 +51,90 @@
 3. Товары необходимо хранить в репозитории (класс, в котором в виде List<Product> хранятся товары). Репозиторий должен уметь выдавать список всех товаров и товар по id.
 4. Сделать форму для добавления товара в репозиторий и логику работы этой формы.
 5. Сделать страницу, на которой отображаются все товары из репозитория.
+
+Комментарии:
+
+</details>
+
+
+### Урок 4. Spring Boot
+<details>
+<summary>Spring Boot. Архитектура. Модель. Обзор решений</summary>
+  
+1. Перенести функциональность, реализованную на прошлом занятии, на платформу Spring Boot.
+
+Комментарии:
+...
+
+</details>
+
+### Урок 5. Java Persistence API. Hibernate. Часть 1
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 6. Java Persistence API. Hibernate. Часть 2
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 7. Spring Data
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 8. Thymeleaf
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 9. Spring REST. Часть 1
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 10. Spring REST. Часть 2
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 11. Spring Security
+<details>
+<summary></summary>
+  
+
+Комментарии:
+
+</details>
+
+### Урок 12. Практика
+<details>
+<summary></summary>
+  
 
 Комментарии:
 
