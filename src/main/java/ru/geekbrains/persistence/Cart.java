@@ -3,6 +3,7 @@ package ru.geekbrains.persistence;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,10 +32,10 @@ public class Cart {
         }
     }
 
-    public double getSum() {
-        double sum = 0.0;
+    public BigDecimal getSum() {
+        BigDecimal sum = BigDecimal.valueOf(0);
         for (Map.Entry<Product, Integer> entry : cartMap.entrySet()) {
-            sum += entry.getKey().getPrice() * entry.getValue();
+            sum = sum.add(entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
         return sum;
     }

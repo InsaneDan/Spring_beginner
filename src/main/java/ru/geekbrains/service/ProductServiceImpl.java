@@ -1,13 +1,13 @@
 package ru.geekbrains.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.geekbrains.persistence.Product;
 import ru.geekbrains.persistence.ProductRepository;
 
 import java.util.List;
 
-@Component
+@Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;

@@ -2,6 +2,8 @@ package ru.geekbrains.service;
 
 import ru.geekbrains.persistence.Product;
 
+import java.math.BigDecimal;
+
 public interface CartService {
 
     void addProduct(Product product, Integer quantity);
@@ -9,7 +11,7 @@ public interface CartService {
 
     void delProduct(Product product, Integer quantity);
 
-    Double getSum();
+    BigDecimal getSum();
 
     void printCart();
 

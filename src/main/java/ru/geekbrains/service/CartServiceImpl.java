@@ -1,30 +1,26 @@
 package ru.geekbrains.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.geekbrains.persistence.Cart;
 import ru.geekbrains.persistence.Product;
 import ru.geekbrains.persistence.ProductRepository;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
-@Component
-//@Scope("prototype")
+@Service
 public class CartServiceImpl implements CartService {
 
     private Cart cart;
+    private final ProductRepository productRepository;
 
-    // по большОму счету добавление продуктового репозитория в корзину не требуется; экспериментировал с @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
+    public CartServiceImpl(ProductRepository productRepository, Cart cart) {
         this.productRepository = productRepository;
+        this.cart = cart;
     }
 
-    @Autowired
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setNewCart() {
+        this.cart = new Cart();
     }
 
     @Override
@@ -44,19 +40,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Double getSum() {
+    public BigDecimal getSum() {
         return cart.getSum();
     }
 
-
     public void printCart() {
-        double sum = 0.0;
+        BigDecimal sum = BigDecimal.valueOf(0);
         // NOTE: т.к. это мапа, сортировки нет
         for (Map.Entry<Product, Integer> entryMap : cart.getCartMap().entrySet()) {
             Product product = entryMap.getKey();
+            BigDecimal prodSum = product.getPrice().multiply(BigDecimal.valueOf(entryMap.getValue()));
             System.out.printf("Product id = %-2s | name = %-15s | price = %-8s | quantity = %-3s | sum = %-12s \n",
-                    product.getId(), product.getName(), product.getPrice(), entryMap.getValue(), product.getPrice() * entryMap.getValue());
-            sum += product.getPrice() * entryMap.getValue();
+                    product.getId(), product.getName(), product.getPrice(), entryMap.getValue(), prodSum);
+            sum = sum.add(prodSum);
         }
         System.out.println("Общая стоимость продуктов в корзине: " + sum);
     }
