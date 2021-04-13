@@ -1,103 +1,47 @@
 package ru.geekbrains;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.geekbrains.config.AppConfig;
-import ru.geekbrains.persistence.Cart;
-import ru.geekbrains.persistence.Product;
-import ru.geekbrains.service.CartService;
-import ru.geekbrains.service.CartServiceImpl;
-import ru.geekbrains.service.ProductService;
-import ru.geekbrains.service.ProductServiceImpl;
-
+import org.springframework.stereotype.Component;
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.List;
+import ru.geekbrains.config.AppConfig;
+import ru.geekbrains.persistence.Product;
+import ru.geekbrains.service.CartServiceImpl;
+import ru.geekbrains.service.ProductService;
 
+@Component
 public class DemoApp {
 
-    static ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-    static ProductService productService = context.getBean(ProductServiceImpl.class);
-    static CartServiceImpl cart;
+    private final ProductService productService;
+    private CartServiceImpl cart;
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("\n----------- ТЕСТИРОВАНИЕ КОРЗИНЫ -----------\n");
-        cartTest(); // все операции с корзиной и списком продуктов в автоматическом режиме
-        System.out.println("\n----- ИНТЕРАКТИВНАЯ РАБОТА С КОРЗИНОЙ ------\n");
-        cartInteract(); // операции с корзиной в интерактивном режиме
+    public DemoApp(ProductService productService, CartServiceImpl cart) {
+        this.productService = productService;
+        this.cart = cart;
     }
 
-    private static void cartTest() {
-        printList(productService.getProductList(), "СПИСОК ПРОДУКТОВ:");
-        printSeparator();
-
-        //вывести продукт с id = 2
-        System.out.println("Распечатать: продукт с id=2");
-        System.out.println(productService.getProductById(2L));
-        printSeparator();
-
-        //удалить продукт с id = 3, добавить - с id = 8, заменить - id = 1 (сделать цену 0.01)
-        System.out.println("Продукт с id=3 удалён.");
-        productService.deleteById(3L);
-        System.out.println("Продукт с id=8 добавлен.");
-        productService.saveOrUpdate(new Product(8L, "Product Added", 888.0));
-        System.out.println("Продукт с id=1 изменён.");
-        productService.saveOrUpdate(new Product(1L, "Product Changed", .01));
-        printSeparator();
-
-        //распечатать измененный список продуктов
-        printList(productService.getProductList(), "СПИСОК ПРОДУКТОВ:");
-        printSeparator();
-
-        //создать корзину
-        ProductService productService2 = context.getBean(ProductServiceImpl.class);
-        System.out.println("Бин имеет состояние singleton. Новый экземпляр класса не создается.");
-        printList(productService2.getProductList(), "НОВЫЙ СПИСОК ПРОДУКТОВ (повторяет первый):");
-        printSeparator();
-
-        cart = context.getBean("cartServiceImpl", CartServiceImpl.class);
-        System.out.println("КОРЗИНА №1 (все операции с корзиной - добавить, изменить количество, удалить продукт)");
-        // добавить продукты в корзину
-        cart.addProduct(productService.getProductById(1L), 1);
-        cart.addProduct(productService.getProductById(2L), 3);
-        cart.addProduct(productService.getProductById(4L), 9);
-        cart.addProduct(productService.getProductById(5L), 9);
-        cart.addProduct(productService.getProductById(8L), 5);
-        // увеличить количество продуктов в корзине (добавить еще продукт с id=1 + 2шт.), итого 3шт.
-        cart.addProduct(productService.getProductById(1L), 2);
-        // уменьшить количество одного продукта в корзине (id=2 - 1шт.), итого должно быть 2шт.
-        cart.delProduct(productService.getProductById(2L), 1);
-        // удалить продукт из корзины
-        cart.delProduct(productService.getProductById(4L), 999);
-        cart.delProduct(productService.getProductById(5L), null);
-        cart.printCart();
-        System.out.println("Проверка стоимости корзины (getSum): " + cart.getSum());
-        printSeparator();
-
-        // создать новую корзину
-        System.out.println("КОРЗИНА №2");
-        CartService cart2 = context.getBean("cartServiceImpl", CartServiceImpl.class);
-        cart2.addProduct(1L, 3);
-        cart2.printCart();
+    public static void main(String[] args) {
+        new AnnotationConfigApplicationContext(AppConfig.class);
     }
 
     public static void printSeparator(){
         System.out.println("------------------------------");
     }
 
-    private static void printList(List<?> list, String title) {
-        if (title != null && !title.isEmpty()) {
-            System.out.println(title);
-        }
+    private static void printList(List<?> list) {
+        System.out.println("СПИСОК ПРОДУКТОВ:");
         for (Object el : list) {
             System.out.println(el.toString());
         }
     }
 
-    private static void cartInteract() throws IOException {
-        cart = context.getBean("cartServiceImpl", CartServiceImpl.class);
-        cart.setCart(context.getBean("cart", Cart.class));
+    @PostConstruct
+    private void cartInteract() throws IOException {
+        System.out.println("\n----- ИНТЕРАКТИВНАЯ РАБОТА С КОРЗИНОЙ ------\n");
 
         System.out.println("Консольное приложение для работы с корзиной. Для справки /?");
         listCommand();
@@ -109,8 +53,8 @@ public class DemoApp {
 
             System.out.print("Введите команду: ");
 
-            Long prodId = -1L;
-            int quantity = -1;
+            Long prodId;
+            int quantity;
 
             String str = in.readLine();
             if (!str.isEmpty()) {
@@ -123,15 +67,17 @@ public class DemoApp {
                 } else if (command.equalsIgnoreCase("/?")) {
                     listCommand(); // справка
                     printSeparator();
+                } else if (command.equalsIgnoreCase("test")) {
+                    cartTest();
                 } else if (command.equals("list")) {
                     // распечатать список продуктов
                     printSeparator();
-                    printList(productService.getProductList(), "СПИСОК ПРОДУКТОВ:");
+                    printList(productService.getProductList());
                     printSeparator();
                 } else if (command.equalsIgnoreCase("new")) {
                     // удалить корзину, создать новую
                     cart = null;
-                    cart = context.getBean("cartServiceImpl", CartServiceImpl.class);
+                    cart = new AnnotationConfigApplicationContext(AppConfig.class).getBean("cartServiceImpl", CartServiceImpl.class);
                     System.out.println("Создана новая (пустая) корзина, старая - удалена.");
                 } else if (command.equalsIgnoreCase("print")) {
                     printSeparator();
@@ -188,11 +134,81 @@ public class DemoApp {
         System.out.println("Распечатать содержимое корзины: print");
         System.out.println("Распечатать только стоимость корзины: sum");
         System.out.println("Удалить корзину и создать новую: new");
+        System.out.println("Тест (все операции с корзиной и продуктами): test");
         System.out.println("Завершить: exit");
     }
+
+
+    private void cartTest() {
+        System.out.println("\n----------- ТЕСТИРОВАНИЕ КОРЗИНЫ -----------\n");
+
+        printList(productService.getProductList());
+        printSeparator();
+
+        //вывести продукт с id = 2
+        System.out.println("Распечатать: продукт с id=2");
+        System.out.println(productService.getProductById(2L));
+        printSeparator();
+
+        //удалить продукт с id = 3, добавить - с id = 8, заменить - id = 1 (сделать цену 0.01)
+        System.out.println("Продукт с id=3 удалён.");
+        productService.deleteById(3L);
+        System.out.println("Продукт с id=8 добавлен.");
+        productService.saveOrUpdate(new Product(8L, "Product Added", BigDecimal.valueOf(888.00)));
+        System.out.println("Продукт с id=1 изменён.");
+        productService.saveOrUpdate(new Product(1L, "Product Changed", BigDecimal.valueOf(.01)));
+        printSeparator();
+
+        //распечатать измененный список продуктов
+        printList(productService.getProductList());
+        printSeparator();
+
+        System.out.println("КОРЗИНА №1 (все операции с корзиной - добавить, изменить количество, удалить продукт)");
+        // добавить продукты в корзину
+        cart.addProduct(productService.getProductById(1L), 1);
+        cart.addProduct(productService.getProductById(2L), 3);
+        cart.addProduct(productService.getProductById(4L), 9);
+        cart.addProduct(productService.getProductById(5L), 9);
+        cart.addProduct(productService.getProductById(8L), 5);
+        // увеличить количество продуктов в корзине (добавить еще продукт с id=1 + 2шт.), итого 3шт.
+        cart.addProduct(productService.getProductById(1L), 2);
+        // уменьшить количество одного продукта в корзине (id=2 - 1шт.), итого должно быть 2шт.
+        cart.delProduct(productService.getProductById(2L), 1);
+        // удалить продукт из корзины
+        cart.delProduct(productService.getProductById(4L), 999);
+        cart.delProduct(productService.getProductById(5L), null);
+        cart.printCart();
+        System.out.println("Проверка стоимости корзины (getSum): " + cart.getSum());
+        printSeparator();
+
+        // создать новую корзину
+        System.out.println("КОРЗИНА №2");
+        cart.setNewCart();
+        cart.addProduct(2L, 2);
+        cart.printCart();
+
+        System.out.println("\n----------- ТЕСТИРОВАНИЕ ЗАВЕРШЕНО -----------\n");
+
+    }
+
 }
 
 /* РЕЗУЛЬТАТ (консоль):
+
+----- ИНТЕРАКТИВНАЯ РАБОТА С КОРЗИНОЙ ------
+
+Консольное приложение для работы с корзиной. Для справки /?
+Распечатать список продуктов: list
+Добавить продукт: add [N продукта] [количество]
+Удалить продукт: del [N продукта] [количество]
+	Если количество товара в корзине < 1, то он удаляется из списка.
+Распечатать содержимое корзины: print
+Распечатать только стоимость корзины: sum
+Удалить корзину и создать новую: new
+Тест (все операции с корзиной и продуктами): test
+Завершить: exit
+------------------------------
+Введите команду: test
 
 ----------- ТЕСТИРОВАНИЕ КОРЗИНЫ -----------
 
@@ -217,14 +233,6 @@ Product {id = 4  | name = Product 4       | price = 444.44  }
 Product {id = 5  | name = Product 5       | price = 55.5    }
 Product {id = 8  | name = Product Added   | price = 888.0   }
 ------------------------------
-Бин имеет состояние singleton. Новый экземпляр класса не создается.
-НОВЫЙ СПИСОК ПРОДУКТОВ (повторяет первый):
-Product {id = 1  | name = Product Changed | price = 0.01    }
-Product {id = 2  | name = Product 2       | price = 20.02   }
-Product {id = 4  | name = Product 4       | price = 444.44  }
-Product {id = 5  | name = Product 5       | price = 55.5    }
-Product {id = 8  | name = Product Added   | price = 888.0   }
-------------------------------
 КОРЗИНА №1 (все операции с корзиной - добавить, изменить количество, удалить продукт)
 Product id = 8  | name = Product Added   | price = 888.0    | quantity = 5   | sum = 4440.0
 Product id = 2  | name = Product 2       | price = 20.02    | quantity = 2   | sum = 40.04
@@ -233,66 +241,8 @@ Product id = 1  | name = Product Changed | price = 0.01     | quantity = 3   | s
 Проверка стоимости корзины (getSum): 4480.07
 ------------------------------
 КОРЗИНА №2
-Product id = 8  | name = Product Added   | price = 888.0    | quantity = 5   | sum = 4440.0
 Product id = 2  | name = Product 2       | price = 20.02    | quantity = 2   | sum = 40.04
-Product id = 1  | name = Product Changed | price = 0.01     | quantity = 6   | sum = 0.06
-Общая стоимость продуктов в корзине: 4480.1
+Общая стоимость продуктов в корзине: 40.04
 
------ ИНТЕРАКТИВНАЯ РАБОТА С КОРЗИНОЙ ------
-
-Консольное приложение для работы с корзиной. Для справки /?
-Распечатать список продуктов: list
-Добавить продукт: add [N продукта] [количество]
-Удалить продукт: del [N продукта] [количество]
-	Если количество товара в корзине < 1, то он удаляется из списка.
-Распечатать содержимое корзины: print
-Распечатать только стоимость корзины: sum
-Удалить корзину и создать новую: new
-Завершить: exit
-------------------------------
-Введите команду: print
-------------------------------
-Общая стоимость продуктов в корзине: 0.0
-------------------------------
-Введите команду: list
-------------------------------
-СПИСОК ПРОДУКТОВ:
-Product {id = 1  | name = Product Changed | price = 0.01    }
-Product {id = 2  | name = Product 2       | price = 20.02   }
-Product {id = 4  | name = Product 4       | price = 444.44  }
-Product {id = 5  | name = Product 5       | price = 55.5    }
-Product {id = 8  | name = Product Added   | price = 888.0   }
-------------------------------
-Введите команду: add 8 8
-В корзину добавлен товар: Product {id = 8  | name = Product Added   | price = 888.0   } - 8 шт.
-Введите команду: add 7 sdf
-Неправильный формат команды
-Введите команду: add 7 7
-Такого товара нет в списке.
-Введите команду: add 1 1
-В корзину добавлен товар: Product {id = 1  | name = Product Changed | price = 0.01    } - 1 шт.
-Введите команду: add 2 2
-В корзину добавлен товар: Product {id = 2  | name = Product 2       | price = 20.02   } - 2 шт.
-Введите команду: print
-------------------------------
-Product id = 8  | name = Product Added   | price = 888.0    | quantity = 8   | sum = 7104.0
-Product id = 2  | name = Product 2       | price = 20.02    | quantity = 2   | sum = 40.04
-Product id = 1  | name = Product Changed | price = 0.01     | quantity = 1   | sum = 0.01
-Общая стоимость продуктов в корзине: 7144.05
-------------------------------
-Введите команду: del 4 4
-Такого продукта нет в корзине.
-Введите команду: del 8 888
-Из корзины удален товар: Product {id = 8  | name = Product Added   | price = 888.0   } - 888 шт.
-Введите команду: print
-------------------------------
-Product id = 2  | name = Product 2       | price = 20.02    | quantity = 2   | sum = 40.04
-Product id = 1  | name = Product Changed | price = 0.01     | quantity = 1   | sum = 0.01
-Общая стоимость продуктов в корзине: 40.05
-------------------------------
-Введите команду: exit
-Спасибо, что воспользовались нашим интернет-магазином.
-
-Process finished with exit code 0
-
+----------- ТЕСТИРОВАНИЕ ЗАВЕРШЕНО -----------
 */
