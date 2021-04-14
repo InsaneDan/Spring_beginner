@@ -1,0 +1,228 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous">
+
+    <title>EShop</title>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+<header>
+
+    <header th:fragment="header" class="p-3 mb-3 border-bottom bg-dark " style="background-color: #1d1d1d;">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand col-1" href="#"><span class="fs-1 fw-bold">EShop</span></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-house" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                                    </svg>
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2 link-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-box-seam">
+                                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                                    </svg>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2 link-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-box-seam">
+                                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                                    </svg>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="d-block nav-link px-2 link-dark text-decoration-none dropdown-toggle"
+                                   id="dropdownHeaderItem" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    </svg>
+                                    DropDown
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownHeaderItem">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-2 link-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-telephone" viewBox="0 0 16 16">
+                                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                    </svg>
+                                    Contacts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-2 link-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-cart" viewBox="0 0 16 16">
+                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                    </svg>
+                                    Cart</a>
+                            </li>
+                        </ul>
+
+                        <div class="dropdown text-center col-1">
+                            <a href="#" class="d-block link-secondary text-decoration-none dropdown-toggle"
+                               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://avatars.githubusercontent.com/u/69733057?v=4" alt="user" width="32"
+                                     height="32" class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Sign in</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+</header>
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <h1 class="mt-5">Sticky footer with fixed navbar</h1>
+        <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A
+            fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code class="small">main
+                &gt; .container</code>.</p>
+        <p>Back to <a href="/docs/5.0/examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur delectus distinctio dolor dolores eius
+            fugiat fugit iste maiores neque obcaecati perferendis provident quaerat qui, quis, sit soluta totam vitae
+            voluptatum!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias animi architecto consequatur,
+            dicta dolor dolorem doloribus eligendi eos error fuga fugit hic itaque libero mollitia nam natus neque nobis
+            optio provident quo, rem repudiandae saepe velit voluptas! Eligendi mollitia possimus quae quasi qui quos
+            suscipit? Consectetur debitis doloremque error explicabo nulla pariatur praesentium quae recusandae suscipit
+            tenetur? A accusamus beatae blanditiis cumque esse eum eveniet ipsam, ipsum maiores nemo nostrum omnis sint
+            ullam vero voluptates. Eligendi eum fuga neque. Corporis dolores eligendi eveniet omnis optio provident unde
+            veniam! Aperiam architecto aspernatur commodi consequuntur corporis culpa dolorem ea earum est ex excepturi
+            expedita harum incidunt inventore itaque, magni maxime minus molestiae, nam nemo nihil nostrum odit optio
+            perspiciatis, placeat quaerat qui quia ratione reiciendis rem reprehenderit repudiandae similique soluta
+            tenetur vel veniam voluptate. Adipisci dolorem ea iure magni numquam, possimus velit. Aperiam dignissimos
+            fugit harum ipsum soluta suscipit vero. Ad aperiam aut beatae dolorem, ea et ex explicabo impedit ipsum
+            laudantium nihil nobis odit officia provident veniam vitae voluptatem? Accusamus adipisci animi aspernatur
+            cumque cupiditate delectus deserunt dolorem doloribus eius illo illum impedit inventore iste iusto
+            laudantium minus neque nihil porro quasi quo quos sapiente sed sequi sunt suscipit temporibus, tenetur ut
+            veritatis vitae voluptas! Dolor doloribus eaque eveniet illo laboriosam repudiandae sequi tempora. Ad
+            adipisci aliquid autem commodi culpa delectus dolorem enim ex, exercitationem fuga impedit maiores minus
+            molestiae molestias neque nisi placeat similique sunt tempora vel! A accusamus aspernatur cupiditate ea
+            eaque, illum ipsam natus nesciunt optio quidem, suscipit unde! Dolorem eligendi laudantium nostrum optio
+            quia tenetur totam, unde! Cupiditate dolores eaque et eum id quidem vero? Asperiores dolor et ex modi
+            mollitia natus nesciunt optio placeat totam ullam. Adipisci animi blanditiis delectus dolore dolorum ea
+            eveniet explicabo fugit inventore iste iure laborum minus mollitia nam nemo nisi obcaecati odio,
+            perspiciatis quod repellat repellendus, saepe sequi sit tenetur ullam veniam vitae. Amet cum dolore dolorum
+            impedit non sequi voluptatem. Accusantium aliquid aspernatur commodi cum dignissimos dolor dolorem est
+            facere illo in iure libero magni non, nostrum quos! Accusamus architecto asperiores dignissimos dolor
+            dolores doloribus dolorum ea enim eum, inventore labore minus nisi quisquam ratione repellat saepe sequi
+            similique velit veniam veritatis? Aliquam delectus est ipsam itaque maxime nihil perferendis recusandae?
+            Amet architecto assumenda corporis debitis distinctio dolorem enim esse eum ex exercitationem fuga fugit hic
+            illum ipsa ipsum labore, magnam nesciunt possimus quae quas quasi qui ratione recusandae rem saepe similique
+            ut vero? A amet aspernatur corporis cum cupiditate debitis eaque facere fugiat illo illum maxime molestias
+            necessitatibus nesciunt perspiciatis quae quos repellendus similique sint, ut, voluptatibus! Aliquid
+            assumenda blanditiis consequuntur culpa debitis deserunt dolor doloremque doloribus excepturi expedita harum
+            id laboriosam minima nostrum optio placeat quidem quis quo recusandae sed totam, unde vitae? Ab accusantium,
+            adipisci assumenda, aut beatae dolores eum facilis ipsam maiores maxime nemo nulla omnis optio, porro qui
+            quia recusandae sunt voluptatum! Consequatur cupiditate delectus fugit harum illum inventore magnam
+            molestiae neque nesciunt placeat quam quidem quo quos, reiciendis sint sunt unde voluptates. Aspernatur
+            assumenda culpa deserunt dolor, enim est eum id ipsum, iste iure laboriosam minus nemo nisi nobis officiis
+            perferendis, porro provident quas ratione rerum sunt unde voluptate voluptates. Adipisci amet autem eaque
+            enim eum eveniet illum maxime natus nemo, officia omnis temporibus? Architecto assumenda atque, dignissimos
+            dolores esse ipsum neque nihil nisi, odio officia quo reiciendis repudiandae similique ullam vitae? Ad amet
+            asperiores consequuntur distinctio dolore dolores doloribus error esse, eum fugit hic minima natus officiis,
+            qui quidem quo sapiente soluta sunt ut, velit vitae voluptas voluptate voluptates. Dolores dolorum, ducimus
+            excepturi expedita in labore nisi quam reprehenderit similique sunt? Aliquam atque autem corporis debitis
+            eius minima quibusdam temporibus. Esse excepturi, laudantium maxime nobis quod repudiandae totam! Aliquam
+            aliquid delectus dolores dolorum ducimus, ea, esse et harum, id labore libero modi perspiciatis possimus
+            provident quae quam reiciendis sit unde voluptas voluptatum! Deleniti distinctio eaque obcaecati omnis
+            ratione reprehenderit rerum soluta temporibus. Beatae corporis, deleniti doloribus, esse ex exercitationem
+            inventore maiores minus necessitatibus, quo reiciendis sint unde velit vero voluptates! A, accusamus, atque
+            dicta dolor, ducimus ea et illum itaque mollitia nulla officiis pariatur quisquam repudiandae sed velit
+            vitae voluptas. Animi dolore dolorem ducimus earum eos ex exercitationem quasi qui reprehenderit voluptate!
+            Consequatur corporis ducimus eaque labore minima, nostrum obcaecati rem rerum. Aut dignissimos facere minima
+            quae quis rerum, ullam vero? Ad consequuntur debitis distinctio eius eveniet nulla officiis, perferendis
+            quam, quia temporibus, voluptas voluptatem! Ad alias animi asperiores, at aut, deleniti dicta earum est
+            laboriosam minus necessitatibus odit optio perspiciatis praesentium qui, quia repellat similique! Asperiores
+            aut autem commodi cumque debitis, deleniti, et ipsum minus officia, optio quo ratione repellat sit soluta
+            temporibus unde velit! Aliquam consequatur deleniti doloremque, eaque error est excepturi exercitationem
+            facere fuga fugit ipsam iusto natus, omnis optio pariatur praesentium quia quidem quis ratione reiciendis
+            sequi sint unde voluptas voluptates voluptatum. A beatae consectetur ducimus ipsa labore minima porro?
+            Accusantium aliquid eius mollitia obcaecati quisquam tenetur veniam. Assumenda ipsa nesciunt numquam
+            officiis optio quae rem reprehenderit tempore? Architecto exercitationem labore libero molestias nihil quis
+            repudiandae tempore? Adipisci animi at beatae debitis deserunt distinctio dolore eaque eligendi expedita
+            facere facilis, impedit ipsam odit rem, sequi similique ullam voluptatum! Aut esse natus numquam officiis
+            reiciendis. Accusantium architecto asperiores beatae debitis deserunt dolorem dolorum earum eveniet ex
+            excepturi labore, laborum laudantium libero maxime nam non nulla optio perspiciatis praesentium quae quas
+            quis rem similique, ut vel veniam voluptas. Corporis enim exercitationem fuga, iste molestiae nobis sint
+            soluta? Distinctio exercitationem labore voluptatem? Alias aliquam assumenda autem debitis eveniet excepturi
+            inventore ipsa ipsum nesciunt placeat! Animi architecto consectetur consequatur dolore ducimus eveniet illum
+            labore magni numquam, sed sequi unde voluptatem voluptatum. A alias debitis delectus deleniti earum esse
+            expedita, in magni nam nihil quaerat rerum saepe suscipit. Accusamus adipisci aspernatur assumenda deserunt
+            dolorum eaque earum error excepturi molestias necessitatibus, nemo non obcaecati, recusandae, repellat
+            reprehenderit sint unde. Asperiores enim rem tenetur! Ab accusamus aliquid animi, asperiores cum dolorem hic
+            in labore laudantium maiores nesciunt nisi officiis perferendis praesentium quam rem vitae voluptates!
+        </p>
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">©IDA, 2021. Geekbrains. Spring Framework 1. Bootstrap 5.0 based page.</span>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+</footer>
+</body>
+</html>
