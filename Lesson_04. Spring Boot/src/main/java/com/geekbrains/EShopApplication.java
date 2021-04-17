@@ -1,13 +1,13 @@
-package com.geekbrains.demo;
+package com.geekbrains;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class EShopApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(EShopApplication.class, args);
     }
 
 }
