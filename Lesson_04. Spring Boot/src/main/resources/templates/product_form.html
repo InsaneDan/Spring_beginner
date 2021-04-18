@@ -7,14 +7,14 @@
 <head th:insert="default :: head" />
 <body class="d-flex flex-column h-100">
 
-<header th:replace="default :: header"> </header>
+<header th:replace="default :: header (activePage=${activePage})"> </header>
 <main class="flex-shrink-0">
     <div class="container">
         <div class="row py-2">
 
             <h3>Форма изменения продукта</h3>
 
-            <form method="POST" th:action="@{/products/edit/save}" th:object="${product}" disabled>
+            <form method="POST" th:action="@{/products/edit/save}" th:object="${product}">
                 <input type="hidden" th:field="*{id}" />
 
                 <div class="input-group mb-3">
@@ -47,10 +47,12 @@
                 <div class="d-flex justify-content-between">
                     <div class="list-group list-group-horizontal">
                         <input type="submit" th:value="*{id == null} ? 'Create' : 'Save'"
-                           class="list-group-item list-group-item-action list-group-item-success" th:disabled="${disabled == true}">
+                           class="list-group-item list-group-item-action list-group-item-success"
+                               th:disabled="${disabled == true}"
+                               th:hidden="${disabled == true}">
                     </div>
                     <div class="list-group list-group-horizontal">
-                        <a type="button" th:href="@{/products}"
+                        <a type="button" th:href="@{${referer}}"
                            class="list-group-item list-group-item-action list-group-item-danger">
                             <i class="bi bi-x-circle"></i>&nbsp;Cancel
                         </a>
@@ -60,6 +62,7 @@
         </div>
     </div>
 </main>
+
 <footer th:replace="default :: footer"> </footer>
 
 </body>

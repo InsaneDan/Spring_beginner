@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -22,16 +25,22 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @ModelAttribute("activePage")
+    String activePage() {
+        return "products";
+    }
+
     @GetMapping
     public String showAll(Model model) {
         model.addAttribute("productList", productService.getProductList());
-        model.addAttribute("currentPage", "products");
         return "products";
     }
 
     @GetMapping("/edit")
     public String editProduct(@RequestParam(required = false) Long id,
                               @RequestParam(required = false) Boolean view,
+                              HttpServletRequest request,
+                              HttpServletResponse response,
                               Model model) {
         Product product;
         if (id == null) {
@@ -41,8 +50,7 @@ public class ProductController {
         }
         model.addAttribute("product", product);
         model.addAttribute("disabled", view);
-        model.addAttribute("currentPage", "products");
-
+        model.addAttribute("referer", request.getHeader("referer"));
         return "product_form";
     }
 
