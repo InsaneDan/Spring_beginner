@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+
+<head th:insert="default :: head" />
+<body class="d-flex flex-column h-100">
+
+<header th:replace="default :: header"> </header>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row py-2">
+
+            <h3>Форма изменения продукта</h3>
+
+            <form method="POST" th:action="@{/products/edit/save}" th:object="${product}" disabled>
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Product name</span>
+                    <input type="text" class="form-control" th:field="*{name}" th:disabled="${disabled == true}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Description</span>
+                    <input type="text" class="form-control" placeholder="... description" th:disabled="${disabled == true}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Manufacturer</span>
+                    <input type="text" class="form-control" placeholder="... manufacturer" th:disabled="${disabled == true}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Price</span>
+                    <input type="text" class="form-control" th:field="*{price}" th:disabled="${disabled == true}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Amount</span>
+                    <input type="text" class="form-control"  placeholder="... amount" th:disabled="${disabled == true}">
+                </div>
+
+                <br><br>
+
+                <div class="d-flex justify-content-between">
+                    <div class="list-group list-group-horizontal">
+                        <input type="submit" th:value="*{id == null} ? 'Create' : 'Save'"
+                           class="list-group-item list-group-item-action list-group-item-success" th:disabled="${disabled == true}">
+                    </div>
+                    <div class="list-group list-group-horizontal">
+                        <a type="button" th:href="@{/products}"
+                           class="list-group-item list-group-item-action list-group-item-danger">
+                            <i class="bi bi-x-circle"></i>&nbsp;Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="default :: footer"> </footer>
+
+</body>
+</html>
