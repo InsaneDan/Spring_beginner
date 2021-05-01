@@ -48,7 +48,7 @@ public class PersistenceConfig {
         return dataSource;
     }
 
-    public Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         // вместо hibernateProperties.setProperty можно, а иногда даже предпочтительнее, использовать hibernateProperties.put.
         // java.util.Properties (extends Hashtable, which is synchronized by default) is a special purpose Map<String, String>.
