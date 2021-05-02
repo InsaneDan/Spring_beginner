@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+
+<head th:insert="default :: head" />
+<body class="d-flex flex-column h-100">
+
+<header th:replace="default :: header (activePage=${activePage})"> </header>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row py-2">
+            <form id="productListForm">
+                <div class="d-flex justify-content-start">
+                    <div class="col-4">
+                        <a type="button" class="btn btn-success" th:href="@{/products/edit}">New product</a>
+                    </div>
+                    <h3>Список продуктов</h3>
+
+                </div>
+                <table class="table" id="productList">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="width: 3%">#</th>
+                        <th scope="col" style="width: 3%">ID</th>
+                        <th scope="col" style="width: 20%">Name</th>
+                        <th scope="col" style="width: 35%">Description</th>
+                        <th scope="col" style="width: 15%">Made by</th>
+                        <th scope="col" style="width: 10%">Price</th>
+                        <th scope="col" style="width: 4%">Amount</th>
+                        <th scope="col" style="width: 5%">Actions</th>
+                        <th scope="col" style="width: 5%">Cart</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${productList.size() == 0}">
+                        <td colspan="9"> No Products Available </td>
+                    </tr>
+                    <tr th:each="product, i : ${productList}">
+                        <td class="text-center" ><span th:text="${i.count}"> # </span></td>
+                        <td class="text-center" ><span th:text="${product.id}"> ID </span></td>
+                        <td class="text-start" >
+                            <a th:text="${product.name}"
+                               th:href="@{'/products/edit?view=1&id=' + ${product.id}}"
+                               class="list-group-item list-group-item-action"
+                               data-toggle="tooltip" data-placement="top" title="Просмотреть сведения">
+                            </a>
+                        </td>
+                        <td class="text-start" ><span> ... some description ... </span></td>
+                        <td class="text-start" ><span> manufacturer </span></td>
+                        <td class="text-end" ><span th:text="${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 2, 'DEFAULT')}"> Price </span></td>
+                        <td class="text-center"><span> 1pc </span></td>
+                        <td>
+                            <div class="d-grid gap-2 d-md-block">
+                                <div class="list-group list-group-horizontal-lg">
+                                    <a th:href="@{'/products/edit?id=' + ${product.id}}"
+                                       class="list-group-item list-group-item-action list-group-item-success"
+                                       data-toggle="tooltip" data-placement="top" title="Редактировать данные">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a th:href="@{'/products/delete?id=' + ${product.id}}"
+                                       class="list-group-item list-group-item-action list-group-item-danger"
+                                       data-toggle="tooltip" data-placement="top" title="Удалить продукт">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-grid gap-2 d-md-block fs-5">
+                                <div class="list-group list-group-horizontal">
+                                    <a th:href="@{'/cart/add/' + ${product.id} + '?q=1'}"
+                                       class="list-group-item list-group-item-action list-group-item-success"
+                                       data-toggle="tooltip" data-placement="top" title="Положить в корзину">
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                    </a>
+                                    <a th:href="@{'/cart/add/' + ${product.id} + '?q=-1'}"
+                                       class="list-group-item list-group-item-action list-group-item-danger"
+                                       data-toggle="tooltip" data-placement="top" title="Удалить наименование из корзины">
+                                        <i class="bi bi-bag-x-fill"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="default :: footer"> </footer>
+
+</body>
+</html>
