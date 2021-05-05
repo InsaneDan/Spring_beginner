@@ -1,6 +1,7 @@
 package com.geekbrains.service;
 
 import com.geekbrains.persistence.entities.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface ProductService {
 
     void deleteById(Long id);
 
+    Page<Product> getProductListPageable(Integer pageNum, Integer productsPerPage);
 }

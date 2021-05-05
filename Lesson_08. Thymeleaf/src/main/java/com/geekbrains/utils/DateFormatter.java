@@ -34,5 +34,4 @@ public class DateFormatter implements Formatter<Date> {
         return dateFormat;
     }
 
-
 }
