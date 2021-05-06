@@ -11,7 +11,39 @@
 <main class="flex-shrink-0">
     <div class="container">
         <div class="row py-2">
-            <form id="productListForm">
+
+            <!--фильтрация через POST-запрос-->
+            <!--<form id="productListForm" th:action="@{/products/filter}" th:object="${productFilter}" method="post">-->
+            <!--фильтрация через GET-запрос-->
+            <form id="productListForm" th:action="@{/products}" th:object="${productFilter}" method="get">
+                <!-- фильтр -->
+                <div class="row g-3 p-2 d-flex justify-content-center">
+                    <div class="form-group col-auto">
+                        <label for="minPrice">Min Price</label>
+                        <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="min"
+                               th:field="*{minPrice}">
+                    </div>
+                    <div class="form-group col-auto">
+                        <label for="maxPrice">Max Price</label>
+                        <input type="number" class="form-control" id="maxPrice" name="mapPrice" placeholder="max"
+                               th:field="*{maxPrice}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="partName">Part Name</label>
+                        <input type="text" class="form-control" id="partName" placeholder="name contains..."
+                               th:field="*{partName}">
+                    </div>
+                    <div class="form-group col-auto">
+                        <label for="btnApply"></label>
+                        <input type="submit" class="form-control btn btn-secondary" id="btnApply" value="Apply">
+                    </div>
+                    <div class="form-group col-auto">
+                        <label for="btnClear"></label>
+                        <a class="form-control btn btn-light" id="btnClear"
+                           th:href="@{/products}" >Clear</a>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-start">
                     <div class="col-4">
                         <a type="button" class="btn btn-success" th:href="@{/products/edit}">New product</a>
@@ -87,14 +119,15 @@
                     </tbody>
                 </table>
 
-                <nav aria-label="Products page navigation">
+                <nav th:if="${currentPage != null}" aria-label="Products page navigation">
                     <ul class="pagination justify-content-center">
                         <li th:if="${previousPage == null}" class="page-item disabled" >
                             <a class="page-link" ><i class="bi bi-backspace"></i></a>
                         </li>
                         <li th:unless="${previousPage == null}" class="page-item">
                             <a class="page-link"
-                               th:href="@{/products/{pageId} (pageId=${previousPage})}">
+                               th:href="@{/products/{pageIndex}?minPrice={minPrice}&maxPrice={maxPrice}&partName={partName}&productsPerPage={productsPerPage}
+                               (pageIndex=${previousPage}, minPrice=*{minPrice}, maxPrice=*{maxPrice}, partName=*{partName}, productsPerPage=${productsPerPage})}">
                                 <i class="bi bi-arrow-left-square-fill"></i>
                                 <span th:text="${previousPage}">Previous</span>
                             </a>
@@ -106,7 +139,8 @@
 
                         <li th:unless="${nextPage == null}" class="page-item">
                             <a class="page-link"
-                               th:href="@{/products/{pageId} (pageId=${nextPage})}">
+                               th:href="@{/products/{pageIndex}?minPrice={minPrice}&maxPrice={maxPrice}&partName={partName}&productsPerPage={productsPerPage}
+                               (pageIndex=${nextPage}, minPrice=*{minPrice}, maxPrice=*{maxPrice}, partName=*{partName}, productsPerPage=${productsPerPage})}">
                                 <span th:text="${nextPage}">Next</span>
                                 <i class="bi bi-arrow-right-square-fill"></i>
                             </a>

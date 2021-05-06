@@ -5,9 +5,11 @@ import com.geekbrains.persistence.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -25,14 +27,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    public Page<Product> getProductListPageable(Integer pageNum, Integer productsPerPage) {
-        // default parameters
-        if (pageNum == null || pageNum == 0)  pageNum = 1;
-        if (productsPerPage == null || productsPerPage == 0)  productsPerPage = 10;
-        // часть списка товаров --- Slice<T>
-        PageRequest pageRequest = PageRequest.of(pageNum - 1, productsPerPage);
-        final Page<Product> products = productRepository.findAll(pageRequest);
-        return products;
+    public Page<Product> getProductsFiltered(BigDecimal minPrice, BigDecimal maxPrice, String partName, Integer pageNum, Integer productsPerPage) {
+        Pageable pageRequest = PageRequest.of(pageNum - 1, productsPerPage);
+        Page<Product> productPage = productRepository.findProductsByPriceBetweenAndNameLike(minPrice, maxPrice, "%"+partName+"%", pageRequest);
+        return productPage;
     }
 
     @Override
