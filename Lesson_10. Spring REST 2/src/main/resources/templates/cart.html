@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+
+<head th:insert="default :: head"/>
+<body class="d-flex flex-column h-100">
+
+<header th:replace="default :: header (activePage=${activePage})"></header>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row py-2">
+            <span th:text="'Cart id: ' + ${cart.cartId}"/>
+            <h2>Список товаров в корзине</h2>
+            <form id="cartList">
+                <table class="table" id="productList">
+                    <thead class="thead-light">
+                    <tr class="fs-5 fw-bold">
+                        <th scope="col" class="text-center" style="width: 5%">#</th>
+                        <th scope="col" class="text-center" style="width: 5%">ID</th>
+                        <th scope="col" class="text-start" style="width: 20%">Наименование</th>
+                        <th scope="col" class="text-start" style="width: 35%">Описание</th>
+                        <th scope="col" class="text-start" style="width: 10%">Производитель</th>
+                        <th scope="col" class="text-center" style="width: 10%">Цена</th>
+                        <th scope="col" class="text-center" style="width: 10%">В&nbsp;корзине</th>
+                        <th scope="col" class="text-center" style="width: 5%">Сумма</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${cartList.size() == 0}">
+                        <td colspan="8"> No Products in cart</td>
+                    </tr>
+                    <tr th:each="product, i : ${cartList}">
+                        <td class="text-center"><span th:text="${i.count}"> # </span></td>
+                        <td class="text-center"><span th:text="${product.id}"> ID </span></td>
+                        <td class="text-start">
+                            <a th:text="${product.title}"
+                               th:href="@{'/products/edit?view=1&id=' + ${product.id}}"
+                               class="list-group-item list-group-item-action"
+                               data-toggle="tooltip" data-placement="top" title="Просмотреть сведения">
+                            </a>
+                        </td>
+                        <td class="text-start"><span> ... some description ... </span></td>
+                        <td class="text-start"><span> manufacturer </span></td>
+                        <td class="text-end">
+                            <span th:text="${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 2, 'DEFAULT')}"> Price </span>
+                        </td>
+
+                        <td>
+                            <div class="d-grid d-sm-block">
+                                <div class="list-group list-group-horizontal">
+                                    <a th:href="@{'/cart/add/' + ${product.id} + '?q=1'}"
+                                       class="list-group-item list-group-item-action list-group-item-success"
+                                       data-toggle="tooltip" data-placement="top" title="Добавить">
+                                        <i class="bi bi-arrow-up"></i>
+                                    </a>
+                                    <a class="list-group-item"
+                                       th:text="${cartService.getProductQuantity(cart, product)}">
+                                    </a>
+                                    <a th:href="@{'/cart/add/' + ${product.id} + '?q=-1'}"
+                                       class="list-group-item list-group-item-action list-group-item-danger"
+                                       data-toggle="tooltip" data-placement="top" title="Удалить">
+                                        <i class="bi bi-arrow-down"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span th:text="${#numbers.formatDecimal(product.price * cartService.getProductQuantity(cart, product), 1, 'DEFAULT', 2, 'DEFAULT')}"> ID </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot class="fs-4 fw-bold">
+                    <tr>
+                        <td colspan="7">Total:</td>
+                        <td th:text="${#numbers.formatDecimal(cartService.getSum(cart), 1, 'DEFAULT', 2, 'DEFAULT')}"> 1000.00 </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="default :: footer"></footer>
+
+</body>
+</html>
