@@ -19,6 +19,10 @@ import java.util.Map;
 public class CartServiceImpl implements CartService {
 
     private final EntityManager em;
+// TODO: исправить в очередном ДЗ
+//    @Lezenford (https://github.com/Lezenford) 4 hours ago
+//    осталось от времен до JPA, стоит переложить все на JPA, что еще работает на entityManager, это повысит
+//    единообразие кода. не стоит без веской причины мешать несколько подходов
 
     private final ProductRepository productRepository;
 

@@ -52,7 +52,7 @@ public class Product {
         return String.format("Product id = %s, name = %s, price = %s", id, name, price);
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -63,5 +63,5 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, price);
-    }
+    }*/
 }

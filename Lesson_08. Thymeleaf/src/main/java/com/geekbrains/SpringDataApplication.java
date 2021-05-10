@@ -15,14 +15,6 @@ import java.math.BigDecimal;
 @SpringBootApplication
 public class SpringDataApplication {
 
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
-
-    public SpringDataApplication(UserRepository userRepository, ProductRepository productRepository) {
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(SpringDataApplication.class, args);
     }

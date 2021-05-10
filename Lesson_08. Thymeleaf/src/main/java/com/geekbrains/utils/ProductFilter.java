@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductFilter {
 
-    BigDecimal minPrice;
-    BigDecimal maxPrice;
-    String partName;
+    private BigDecimal minPrice;
+    private BigDecimal maxPrice;
+    private String partName;
 
 }

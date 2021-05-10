@@ -13,10 +13,6 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
 
-    public Order(User user) {
-        this.user = user;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
