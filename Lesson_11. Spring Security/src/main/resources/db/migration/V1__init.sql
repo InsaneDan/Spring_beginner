@@ -12,7 +12,7 @@ create table roles (
   primary key (id)
 );
 
-CREATE TABLE users_roles (
+create table users_roles (
   user_id               bigint not null,
   role_id               int not null,
   primary key (user_id, role_id),
@@ -22,13 +22,31 @@ CREATE TABLE users_roles (
 
 insert into roles (name)
 values
-('ROLE_USER'), ('ROLE_ADMIN');
+('ROLE_USER'), ('ROLE_MANAGER'), ('ROLE_ADMIN'), ('ROLE_SUPERADMIN');
 
 insert into users (username, password, email)
 values
-('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com');
-
+('user', '$2y$12$3jD2vqhTkyn3nYy4XmMUXO9V8LaW1gQPsiC8vqaanV7Q05dydOY9C', 'user@gmail.com'),
+('manager', '$2y$12$3jD2vqhTkyn3nYy4XmMUXO9V8LaW1gQPsiC8vqaanV7Q05dydOY9C', 'manager@gmail.com'),
+('admin', '$2y$12$3jD2vqhTkyn3nYy4XmMUXO9V8LaW1gQPsiC8vqaanV7Q05dydOY9C', 'admin@gmail.com'),
+('superadmin', '$2y$12$3jD2vqhTkyn3nYy4XmMUXO9V8LaW1gQPsiC8vqaanV7Q05dydOY9C', 'superadmin@gmail.com');
+-- 123
 insert into users_roles (user_id, role_id)
 values
 (1, 1),
-(1, 2);
+(2, 2),
+(3, 3),
+(4, 4);
+
+create table products (
+    id                    bigserial,
+    title                 varchar(255) not null,
+    price                 decimal(6,2) not null,
+    primary key (id));
+
+insert into products (title, price)
+values
+('Product1', 10),
+('Product2', 20),
+('Product3', 30),
+('Product4', 40);

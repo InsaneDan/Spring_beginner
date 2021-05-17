@@ -12,11 +12,12 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-public class GlobalController {
+@RequestMapping(value = "/api/v1/test")
+public class TestController {
 
     private final UserDetailsService userDetailsService;
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String homePage() {
         return "home";
     }
@@ -26,17 +27,12 @@ public class GlobalController {
         return "unsecured";
     }
 
-    @GetMapping("/auth")
-    public String authPage() {
-        return "authenticated";
-    }
-
     @GetMapping("/admin")
     public String adminPage() {
         return "admin";
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user_authentication")
     public String userPageAuthentication(Authentication authentication) {
         return "Authenticated user info: " + authentication.getName() + " authorities: " + authentication.getAuthorities();
     }
