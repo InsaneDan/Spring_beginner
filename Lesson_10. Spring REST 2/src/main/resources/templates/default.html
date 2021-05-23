@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+
+<head th:fragment="head">
+    <!-- Required meta tags -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+
+    <title>EShop</title>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+<header th:fragment="header" class="p-3 mb-3 border-bottom bg-dark " style="background-color: #1d1d1d;">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!--fixed-top-->
+            <div class="container-fluid">
+                <a class="navbar-brand col-2" href="#"><span class="fs-1 fw-bold">EShop</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <br>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a th:href="@{/}" class="nav-link px-2 link-dark"
+                                th:classappend="${activePage == 'index' ? 'active' : ''}">
+                                Home
+                                <i class="bi bi-house"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a th:href="@{/test}"
+                               class="d-block nav-link px-2 link-dark text-decoration-none dropdown-toggle"
+                               id="dropdownHeaderItem" data-bs-toggle="dropdown" aria-expanded="false">
+                                Test Links (dropdown)
+                                <i class="bi bi-person-bounding-box"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownHeaderItem">
+                                <li><a class="dropdown-item disabled">Элементы для проверки</a></li>
+                                <li><a class="dropdown-item"
+                                       th:href="@{/products}">Product List</a></li>
+                                <li><a class="dropdown-item"
+                                       th:href="@{/products/edit?id=3}">Product Form [id=3]</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a th:href="@{/products}" class="nav-link px-2 link-dark"
+                               th:classappend="${activePage == 'products' ? 'active' : ''}">
+                                Products
+                                <i class="bi bi-box-seam"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/contacts}" class="nav-link px-2 link-dark"
+                               th:classappend="${activePage == 'contacts' ? 'active' : ''}">
+                                Contacts
+                                <i class="bi bi-telephone"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/cart}" class="nav-link px-2 link-dark"
+                               th:classappend="${activePage == 'cart' ? 'active' : ''}">
+                                Cart
+                                <i class="bi bi-cart2"></i>
+                                <!-- th:text="${cartItemsCount > 0 ? cartItemsCount : ''} -->
+                                <span class="badge bg-secondary"
+                                      th:if="${@cartService.getItemsAmount(@cart) > 0}"
+                                      th:text="${@cartService.getItemsAmount(@cart)}"> ? </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="dropdown text-center col-1">
+                        <a href="#" class="d-block link-secondary text-decoration-none dropdown-toggle"
+                           id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://avatars.githubusercontent.com/u/69733057?v=4" alt="user" width="32"
+                                 height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
+                            <li><a class="dropdown-item" href="#">Sign in</a></li>
+                            <li><a class="dropdown-item" href="#">Register</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="flex-shrink-0">
+    <div th:fragment="lorem" class="container">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, aspernatur consequatur, consequuntur distinctio
+            earum impedit magni nostrum, odit possimus repudiandae sequi tenetur voluptate! Asperiores dolor ex ipsa
+            molestias mollitia nihil ullam, voluptate? Alias aliquid dolor eaque facilis mollitia nam natus, non officia
+            quae, quidem repellendus reprehenderit sint voluptas. Ad atque blanditiis consequuntur dolor ducimus error,
+            expedita harum, inventore itaque, magnam nobis praesentium quas quidem repellendus rerum saepe voluptas.
+            Aspernatur atque deserunt ullam. Ab ad aliquam, corporis distinctio doloribus earum eos, eveniet facere
+            harum in iusto magni maiores non officia, placeat quae quidem quis quo ullam vel! Culpa distinctio illo
+            illum.
+        </p>
+    </div>
+
+</main>
+
+<footer th:fragment="footer" class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">&#169;IDA, 2021. Geekbrains. Spring Framework 1. Bootstrap 5.0 based page.</span>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>-->
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+            integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+            integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+            crossorigin="anonymous"></script>
+</footer>
+</body>
+</html>
