@@ -4,9 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.geekbrains.persistence.dtos.ProductDto;
 import ru.geekbrains.persistence.entities.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class ProductConverter {
 

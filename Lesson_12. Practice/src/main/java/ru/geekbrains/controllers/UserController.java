@@ -1,12 +1,10 @@
 package ru.geekbrains.controllers;
 
-import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.persistence.entities.User;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
 

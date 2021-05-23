@@ -1,5 +1,6 @@
 package ru.geekbrains.configurations;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,12 +17,9 @@ import ru.geekbrains.services.UserService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserService userService;
-
-    public SecurityConfiguration(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {

@@ -1,7 +1,6 @@
 package ru.geekbrains.persistence.entities;
 
 import lombok.Data;
-import ru.geekbrains.persistence.entities.Role;
 
 import javax.persistence.*;
 import java.util.Collection;

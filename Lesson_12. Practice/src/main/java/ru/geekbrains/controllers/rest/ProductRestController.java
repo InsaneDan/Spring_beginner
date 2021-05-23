@@ -1,7 +1,6 @@
 package ru.geekbrains.controllers.rest;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +14,7 @@ import ru.geekbrains.services.ProductService;
 import java.math.BigDecimal;
 
 @RestController
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 @RequestMapping("/api/v1/products")
 public class ProductRestController {
 

@@ -1,13 +1,11 @@
 package ru.geekbrains.persistence.entities;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {

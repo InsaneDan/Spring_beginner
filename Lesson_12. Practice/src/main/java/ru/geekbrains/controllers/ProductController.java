@@ -1,8 +1,7 @@
 package ru.geekbrains.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,21 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
+@Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-
     private final ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     @ModelAttribute("activePage")
     String activePage() {
@@ -91,9 +83,9 @@ public class ProductController {
 
     @GetMapping("/delete")
     public void deleteProduct(@RequestParam Long id, Model model,
-                                HttpServletRequest request,
-                                HttpServletResponse response) throws IOException {
-        logger.debug("Product deleted: " + productService.findProductById(id).toString());
+                              HttpServletRequest request,
+                              HttpServletResponse response) throws IOException {
+        log.debug("Product deleted: " + productService.findProductById(id).toString());
         productService.deleteProductById(id);
 //        model.addAttribute("productList", productService.findAllFilteredPaged());
         response.sendRedirect(request.getHeader("referer"));
@@ -115,3 +107,5 @@ public class ProductController {
 
 
 }
+
+

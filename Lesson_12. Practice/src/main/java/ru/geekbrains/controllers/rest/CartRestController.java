@@ -1,14 +1,14 @@
 package ru.geekbrains.controllers.rest;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.persistence.Cart;
 import ru.geekbrains.services.CartService;
 
 @RestController
 @RequestMapping("/api/v1/cart")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class CartRestController {
 
     private CartService cartService;

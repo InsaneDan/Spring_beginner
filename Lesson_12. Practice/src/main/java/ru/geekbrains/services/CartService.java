@@ -2,13 +2,11 @@ package ru.geekbrains.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.persistence.Cart;
 import ru.geekbrains.persistence.entities.Product;
 import ru.geekbrains.persistence.repositories.OrderRepository;
-import ru.geekbrains.services.ProductService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,12 +16,11 @@ import java.util.Map;
 
 @Service
 @Data
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 //@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CartService {
 
     private final OrderRepository orderRepository;
-//    private final CartEntryRepository cartEntryRepository;
     private final ProductService productService;
 
     @Lookup
